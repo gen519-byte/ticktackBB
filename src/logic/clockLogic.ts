@@ -2,9 +2,9 @@ import type { ClockState } from '../types/game';
 
 // レベルに応じた速度を返す
 export function speedForLevel(level: number): number {
-  // レベル1: 0.004 (250フレーム/パネル ≒ 4秒@60fps)
-  // レベルが1上がるごとに10%増速、最大0.02
-  return Math.min(0.004 * 1.1 ** (level - 1), 0.02);
+  // レベル1: 0.00133 (750フレーム/パネル ≒ 12秒@60fps)
+  // レベルが1上がるごとに10%増速、最大0.00667
+  return Math.min(0.00133 * 1.1 ** (level - 1), 0.00667);
 }
 
 // スコアを更新（パネル通過ごとに +10、レベル×ボーナス）

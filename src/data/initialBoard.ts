@@ -48,7 +48,7 @@ export const INITIAL_CLOCK: ClockState = {
   entryDir: 'left',
   exitDir: 'right',
   progress: 0,
-  speed: 0.004, // 1フレームあたり0.4% 進む（~250フレームでパネル横断）
+  speed: 0.00133, // 1フレームあたり0.133% 進む（~750フレームでパネル横断）
 };
 
 export const INITIAL_EMPTY_CELL = { row: 3, col: 3 };
