@@ -1,0 +1,96 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  background: linear-gradient(135deg, #1a0f05 0%, #2d1c08 50%, #1a0f05 100%);
+  min-height: 100dvh;
+  color: #f0e0b0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 16px;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ===== ヘッダー ===== */
+.app-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-title {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #f5e0a0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.app-stats {
+  display: flex;
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #a08050;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: bold;
+  color: #f5e0a0;
+  line-height: 1;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* ===== 盤面 ===== */
+.app-main {
+  width: 100%;
+}
+
+.board-wrapper {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* ===== フッター ===== */
+.app-footer {
+  font-size: 11px;
+  color: #7a6040;
+  letter-spacing: 1px;
+  text-align: center;
+}
