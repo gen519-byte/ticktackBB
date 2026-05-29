@@ -9,7 +9,8 @@ type Action =
   | { type: 'START' }
   | { type: 'SLIDE'; targetRow: number; targetCol: number }
   | { type: 'TICK' }
-  | { type: 'RESET' };
+  | { type: 'RESET' }
+  | { type: 'SET_SPEED'; multiplier: number };
 
 function makeInitialState(): GameState {
   return {
@@ -18,6 +19,7 @@ function makeInitialState(): GameState {
     clock: INITIAL_CLOCK,
     phase: 'idle',
     score: 0,
+    speedMultiplier: 1,
   };
 }
 
@@ -29,7 +31,7 @@ function levelFromScore(score: number): number {
 function reducer(state: GameState, action: Action): GameState {
   switch (action.type) {
     case 'START': {
-      return { ...makeInitialState(), phase: 'playing' };
+      return { ...makeInitialState(), phase: 'playing', speedMultiplier: state.speedMultiplier };
     }
 
     case 'SLIDE': {
@@ -56,7 +58,7 @@ function reducer(state: GameState, action: Action): GameState {
       if (state.phase !== 'playing') return state;
 
       const level = levelFromScore(state.score);
-      const clockWithSpeed = { ...state.clock, speed: speedForLevel(level) };
+      const clockWithSpeed = { ...state.clock, speed: speedForLevel(level, state.speedMultiplier) };
       const { state: newClock, gameover } = advanceClock(state.board, clockWithSpeed);
 
       if (gameover) {
@@ -73,7 +75,11 @@ function reducer(state: GameState, action: Action): GameState {
     }
 
     case 'RESET': {
-      return makeInitialState();
+      return { ...makeInitialState(), speedMultiplier: state.speedMultiplier };
+    }
+
+    case 'SET_SPEED': {
+      return { ...state, speedMultiplier: action.multiplier };
     }
   }
 }
@@ -81,14 +87,18 @@ function reducer(state: GameState, action: Action): GameState {
 export function useGameState() {
   const [state, dispatch] = useReducer(reducer, undefined, makeInitialState);
 
-  const start = useCallback(() => dispatch({ type: 'START' }), []);
-  const reset = useCallback(() => dispatch({ type: 'RESET' }), []);
-  const tick  = useCallback(() => dispatch({ type: 'TICK'  }), []);
-  const slide = useCallback(
+  const start    = useCallback(() => dispatch({ type: 'START' }), []);
+  const reset    = useCallback(() => dispatch({ type: 'RESET' }), []);
+  const tick     = useCallback(() => dispatch({ type: 'TICK'  }), []);
+  const slide    = useCallback(
     (targetRow: number, targetCol: number) =>
       dispatch({ type: 'SLIDE', targetRow, targetCol }),
     [],
   );
+  const setSpeed = useCallback(
+    (multiplier: number) => dispatch({ type: 'SET_SPEED', multiplier }),
+    [],
+  );
 
-  return { state, start, reset, tick, slide };
+  return { state, start, reset, tick, slide, setSpeed };
 }

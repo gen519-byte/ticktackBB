@@ -87,6 +87,26 @@ body {
   box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
+/* ===== 設定ボタン ===== */
+.settings-btn {
+  background: none;
+  border: 1px solid #5a3a18;
+  border-radius: 6px;
+  padding: 5px 7px;
+  color: #a08050;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s;
+  line-height: 0;
+}
+
+.settings-btn:hover {
+  color: #f5e0a0;
+  border-color: #a07040;
+}
+
 /* ===== フッター ===== */
 .app-footer {
   font-size: 11px;

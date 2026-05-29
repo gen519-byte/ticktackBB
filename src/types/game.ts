@@ -39,4 +39,5 @@ export interface GameState {
   clock: ClockState;
   phase: GamePhase;
   score: number;
+  speedMultiplier: number; // 速度倍率（1.0 = ふつう）
 }

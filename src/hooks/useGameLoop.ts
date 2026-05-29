@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import type { GamePhase } from '../types/game';
 
 // requestAnimationFrame ループを管理する
-// playing フェーズ中のみループを走らせ、それ以外はキャンセルする
-export function useGameLoop(phase: GamePhase, onTick: () => void): void {
+// playing フェーズ中かつ paused=false のときのみループを走らせる
+export function useGameLoop(phase: GamePhase, paused: boolean, onTick: () => void): void {
   const rafRef = useRef<number>(0);
   const onTickRef = useRef(onTick);
 
@@ -13,7 +13,7 @@ export function useGameLoop(phase: GamePhase, onTick: () => void): void {
   });
 
   useEffect(() => {
-    if (phase !== 'playing') {
+    if (phase !== 'playing' || paused) {
       cancelAnimationFrame(rafRef.current);
       return;
     }
@@ -32,5 +32,5 @@ export function useGameLoop(phase: GamePhase, onTick: () => void): void {
       running = false;
       cancelAnimationFrame(rafRef.current);
     };
-  }, [phase]);
+  }, [phase, paused]);
 }
