@@ -49,6 +49,30 @@ export function slidePanel(
   };
 }
 
+// スライド操作によって時計が乗っているパネルが動くかどうかを判定
+// 水平スライド: 同じ行で target〜empty の範囲内に時計がいれば true
+// 垂直スライド: 同じ列で target〜empty の範囲内に時計がいれば true
+export function wouldMoveClock(
+  targetRow: number,
+  targetCol: number,
+  emptyRow: number,
+  emptyCol: number,
+  clockRow: number,
+  clockCol: number,
+): boolean {
+  if (targetRow === emptyRow) {
+    if (clockRow !== targetRow) return false;
+    const lo = Math.min(targetCol, emptyCol);
+    const hi = Math.max(targetCol, emptyCol);
+    return clockCol >= lo && clockCol <= hi;
+  } else {
+    if (clockCol !== targetCol) return false;
+    const lo = Math.min(targetRow, emptyRow);
+    const hi = Math.max(targetRow, emptyRow);
+    return clockRow >= lo && clockRow <= hi;
+  }
+}
+
 // 指定セルのパネルを取得（範囲外は undefined を返す）
 export function getCell(board: Board, row: number, col: number): Cell | undefined {
   if (row < 0 || row >= 4 || col < 0 || col >= 4) return undefined;

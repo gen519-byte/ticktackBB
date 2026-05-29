@@ -1,7 +1,7 @@
 import { useReducer, useCallback } from 'react';
 import type { GameState } from '../types/game';
 import { createInitialBoard, INITIAL_CLOCK, INITIAL_EMPTY_CELL } from '../data/initialBoard';
-import { slidePanel, canSlide } from '../logic/boardLogic';
+import { slidePanel, canSlide, wouldMoveClock } from '../logic/boardLogic';
 import { advanceClock } from '../logic/pathLogic';
 import { calcScore, speedForLevel } from '../logic/clockLogic';
 
@@ -40,6 +40,11 @@ function reducer(state: GameState, action: Action): GameState {
       const { emptyCell, board } = state;
 
       if (!canSlide(board, targetRow, targetCol, emptyCell.row, emptyCell.col)) {
+        return state;
+      }
+
+      // 時計が乗っているパネルを含む列・行は動かせない
+      if (wouldMoveClock(targetRow, targetCol, emptyCell.row, emptyCell.col, state.clock.row, state.clock.col)) {
         return state;
       }
 
